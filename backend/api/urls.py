@@ -1,11 +1,12 @@
 from django.urls import path
-from .views import login_view, logout_view, GetCSRFToken, FileUploadView, TaskStatusView
+from .views import  FileUploadView, TaskStatusView,GetResults, DeleteAll
 
 urlpatterns = [
-    path('login/', login_view, name='login'),
-    path('logout/', logout_view, name='logout'),
-    path('csrf_token/', GetCSRFToken.as_view(), name='csrf_token'),
+    
     path('upload/', FileUploadView.as_view(), name='file_upload'),
     path('task-status/<str:task_id>/', TaskStatusView.as_view(), name='task-status'),
-
+    path('deleteall/', DeleteAll.as_view(), name='delete_all_files'),
+    path('delete/<str:document_key>/', FileUploadView.as_view(), name='delete_single_file'),
+    path('download/<str:document_key>/', FileUploadView.as_view(), name='get_single_file'),
+    path('get_files/',GetResults.as_view(), name = 'get_files')
 ]
