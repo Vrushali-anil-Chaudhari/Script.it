@@ -19,6 +19,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         data.update({
             'user': {
                 'username': self.user.username,
+                'email' : self.user.email
                
             }
         })

@@ -28,7 +28,7 @@ LLAMA_KEY = os.getenv('LlamaParse_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["md-dirt-ss-recently.trycloudflare.com", "localhost:5173",  ]
+ALLOWED_HOSTS = ["advocate-skip-arlington-medicines.trycloudflare.com", "localhost:5173",  ]
 
 
 # Application definition
@@ -63,7 +63,7 @@ ROOT_URLCONF = "backend.urls"
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # React app URL
-    "https://md-dirt-ss-recently.trycloudflare.com",
+    "https://advocate-skip-arlington-medicines.trycloudflare.com",
 ]
 
 TEMPLATES = [

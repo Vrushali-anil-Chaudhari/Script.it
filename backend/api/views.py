@@ -65,6 +65,8 @@ class FileUploadView(APIView):
                 index_id = profile.index_id
                 index = client.get_index(str(index_id))
                 print("index get", index_id,index,e)
+                if index == None:
+                    return Response({"message": "Try Again"})
         # print("indexid in views", index_id)
         task_result = upload_truffle_pig.delay(index_id)
 
@@ -142,7 +144,6 @@ class DeleteAll(APIView):
         index_id = profile.index_id
         print(index_id)
         index = client.get_index(str(index_id))
-        documents = index.list_documents()
         indexes = client.list_indexes()
         print(indexes) 
         try:
@@ -169,12 +170,35 @@ class GetResults(APIView):
         index = client.get_index(str(index_id))
 
         search_response = index.search(query_text= query , max_results=3)
-        # print(search_response)
+        print(search_response)
         # print(f'Got result: {search_response[0].content} from {search_response[0].document_key}')
         return Response({"data": search_response[0].content, "document_key":search_response[0].document_key,"message":"Results received"}) 
 
-
+    def get(self,request):
+        current_user = request.user
+        return Response({"data" : {"username": current_user.username , "email": current_user.email , "first_name": current_user.first_name}})
             
+class GetUploadedFiles(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self,request):
+        current_user = request.user
+        try:
+         profile = CustomUser.objects.get(username=current_user.username, email=current_user.email)
+        except CustomUser.DoesNotExist:
+            return Response({'error': 'User not found.'}, status=status.HTTP_404_NOT_FOUND)
+        client = Trufflepig(settings.TRUFFLE_PIG_KEY)
+        index_id = profile.index_id
+        print(index_id)
+        
+        index = client.get_index(str(index_id))
+        if index == None:
+            return Response({"error": "No files"})
+        documents = index.list_documents()
+        return Response({"files":documents})
+
+
+
 
 
 class TaskStatusView(APIView):
@@ -183,12 +207,12 @@ class TaskStatusView(APIView):
     def get(self, request, task_id):
         try:
             task_result = AsyncResult(task_id)
-            print(task_result.status,task_result.info.get('progress', 7))
+            print(task_result.status, task_result.info.get('progress', -1))
             response = {
                 'state': task_result.status,
                 'progress': task_result.info.get('progress', 0),
                 'result': None,
-                'message': 'File Upload In progress' 
+                'message': 'File Upload In progress'
             }
             print(response)
             if task_result.state == 'PENDING':
@@ -200,7 +224,7 @@ class TaskStatusView(APIView):
                     response['result'] = None
                     response['progress'] = 99
                     response['state'] = 'IN PROGRESS'
-                    response['message'] = 'File Upload In progress' 
+                    response['message'] = 'File Upload In progress'
                     current_user = request.user
                     try:
                         profile = CustomUser.objects.get(username=current_user.username, email=current_user.email)
@@ -209,52 +233,40 @@ class TaskStatusView(APIView):
                     index_id = profile.index_id
                     client = Trufflepig(settings.TRUFFLE_PIG_KEY)
                     index = client.get_index(str(index_id))
-                    data_folder = os.path.join(settings.BASE_DIR, 'data' , str(index_id))
+                    data_folder = os.path.join(settings.BASE_DIR, 'data', str(index_id))
                     dir_list = os.listdir(data_folder)
                     files_key = []
                     for i, file_name in enumerate(dir_list):
                         files_key.append(file_name)
                     print(index, index_id)
                     job_tracking_response = index.get_upload_status(files_key)
-                
+
                     result = {}
                     count = 0
-                    for i,status in enumerate(job_tracking_response):
-                        result[i] = {"document_key": status.document_key, "job_status":status.job_status}
+                    for i, status in enumerate(job_tracking_response):
+                        result[i] = {"document_key": status.document_key, "job_status": status.job_status}
                         print(status.job_status)
                         if str(status.job_status) == "SUCCESS":
-                            count +=1
+                            count += 1
                     print("COUNTT", count)
-                    if count == len(job_tracking_response) :
+                    if count == len(job_tracking_response):
                         response['result'] = result
                         response['progress'] = 100
-                        response['state'] = 'SUCCESS' 
+                        response['state'] = 'SUCCESS'
                         response['message'] = 'File Upload Completed'
                     else:
-                    #     count = 0
-                    #     while count == len(job_tracking_response):
-                    #         count = 0
-                    #         time.sleep(2)
-                    #         job_tracking_response2 = index.get_upload_status(files_key)
-                    #         for i,status in enumerate(job_tracking_response2):
-                    #             if status.job_status == "SUCCESS":
-                    #                 count +=1
-
-                    #     if count == len(job_tracking_response) :
-                    #         print("Result",result )
-                            response['result'] = result
-                            response['progress'] = 99
-                            response['state'] = 'IN PROGRESS'
-                            response['message'] = 'File Upload In progress' 
-            elif task_result.state == 'FAILURE':
-                response['state'] = 'Failure'
-                response['progress'] = 0
-                response['result'] = {
-                    'exc_type': task_result.info.get('exc_type'),
-                    'exc_message': task_result.info.get('exc_message'),
-                }
-                response['message'] = 'File Upload Failed' 
+                        response['result'] = result
+                        response['progress'] = 99
+                        response['state'] = 'IN PROGRESS'
+                        response['message'] = 'File Upload In progress'
+                elif task_result.info.get('progress', -1) == -1:
+                    response['state'] = 'Failure'
+                    response['progress'] = 0
+                    response['result'] = {
+                        'exc_type': task_result.info.get('exc_type'),
+                        'exc_message': task_result.info.get('exc_message'),
+                    }
+                    response['message'] = 'File Upload Failed'
             return Response(response)
         except Exception as e:
-            return Response({"error":str(e) })
-
+            return Response({"error": str(e)})
