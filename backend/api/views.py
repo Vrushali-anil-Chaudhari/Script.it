@@ -207,7 +207,7 @@ class TaskStatusView(APIView):
     def get(self, request, task_id):
         try:
             task_result = AsyncResult(task_id)
-            print(task_result.status, task_result.info.get('progress', -1))
+            print(task_result.status, task_result.info.get('progress'))
             response = {
                 'state': task_result.status,
                 'progress': task_result.info.get('progress', 0),
@@ -223,7 +223,7 @@ class TaskStatusView(APIView):
                 if task_result.info.get('progress', 0) == 99:
                     response['result'] = None
                     response['progress'] = 99
-                    response['state'] = 'IN PROGRESS'
+                    response['state'] = 'PROGRESS'
                     response['message'] = 'File Upload In progress'
                     current_user = request.user
                     try:
@@ -240,14 +240,15 @@ class TaskStatusView(APIView):
                         files_key.append(file_name)
                     print(index, index_id)
                     job_tracking_response = index.get_upload_status(files_key)
-
+                    print(job_tracking_response)
                     result = {}
                     count = 0
                     for i, status in enumerate(job_tracking_response):
                         result[i] = {"document_key": status.document_key, "job_status": status.job_status}
                         print(status.job_status)
-                        if str(status.job_status) == "SUCCESS":
+                        if str(status.job_status) == "SUCCESS" or str(status.job_status) == "FAILED":
                             count += 1
+                       
                     print("COUNTT", count)
                     if count == len(job_tracking_response):
                         response['result'] = result
@@ -257,10 +258,10 @@ class TaskStatusView(APIView):
                     else:
                         response['result'] = result
                         response['progress'] = 99
-                        response['state'] = 'IN PROGRESS'
+                        response['state'] = 'PROGRESS'
                         response['message'] = 'File Upload In progress'
                 elif task_result.info.get('progress', -1) == -1:
-                    response['state'] = 'Failure'
+                    response['state'] = 'FAILED'
                     response['progress'] = 0
                     response['result'] = {
                         'exc_type': task_result.info.get('exc_type'),
