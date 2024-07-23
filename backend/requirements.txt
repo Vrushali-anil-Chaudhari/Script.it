@@ -1,0 +1,191 @@
+aiohttp==3.9.5
+aiosignal==1.3.1
+amqp==5.2.0
+annotated-types==0.7.0
+anyio==4.4.0
+asgiref==3.8.1
+asttokens @ file:///opt/conda/conda-bld/asttokens_1646925590279/work
+async-timeout==4.0.3
+attrs==23.2.0
+beautifulsoup4==4.12.3
+billiard==4.2.0
+blis==0.7.11
+cachetools==5.3.3
+catalogue==2.0.10
+celery==5.4.0
+certifi==2024.6.2
+cffi==1.16.0
+chardet==5.2.0
+charset-normalizer==3.3.2
+click==8.1.7
+click-didyoumean==0.3.1
+click-plugins==1.1.1
+click-repl==0.3.0
+cloudpathlib==0.16.0
+colorama==0.4.6
+comm @ file:///C:/b/abs_67a8058udb/croot/comm_1709322909844/work
+confection==0.1.4
+cryptography==42.0.8
+cymem==2.0.8
+dataclasses-json==0.6.7
+debugpy @ file:///C:/b/abs_c0y1fjipt2/croot/debugpy_1690906864587/work
+decorator @ file:///opt/conda/conda-bld/decorator_1643638310831/work
+defusedxml==0.8.0rc2
+Deprecated==1.2.14
+dirtyjson==1.0.8
+distro==1.9.0
+dj-database-url==2.2.0
+Django==5.0.6
+django-allauth==0.63.1
+django-cors-headers==4.3.1
+django-crispy-forms==2.2
+django-templated-mail==1.1.1
+djangorestframework==3.15.1
+djangorestframework-simplejwt==5.3.1
+djoser==2.2.3
+dnspython==2.6.1
+email_validator==2.1.1
+eventlet==0.36.1
+exceptiongroup==1.2.1
+executing @ file:///opt/conda/conda-bld/executing_1646925071911/work
+fastapi==0.111.0
+fastapi-cli==0.0.3
+filelock==3.14.0
+frozenlist==1.4.1
+fsspec==2024.6.0
+google-api-core==2.19.0
+google-api-python-client==2.132.0
+google-auth==2.30.0
+google-auth-httplib2==0.2.0
+google-auth-oauthlib==1.2.0
+googleapis-common-protos==1.63.1
+greenlet==3.0.3
+h11==0.14.0
+httpcore==1.0.5
+httplib2==0.22.0
+httptools==0.6.1
+httpx==0.27.0
+huggingface-hub==0.23.0
+idna==3.7
+ipykernel @ file:///C:/b/abs_c2u94kxcy6/croot/ipykernel_1705933907920/work
+ipython @ file:///C:/b/abs_b6pfgmrqnd/croot/ipython_1704833422163/work
+jedi @ file:///C:/ci/jedi_1644315428305/work
+Jinja2==3.1.4
+joblib==1.4.2
+jsonpath-ng==1.6.1
+jupyter_client @ file:///C:/b/abs_a6h3c8hfdq/croot/jupyter_client_1699455939372/work
+jupyter_core @ file:///C:/b/abs_c769pbqg9b/croot/jupyter_core_1698937367513/work
+kombu==5.3.7
+langcodes==3.4.0
+language_data==1.2.0
+llama-cloud==0.0.6
+llama-index==0.10.49
+llama-index-agent-openai==0.2.7
+llama-index-cli==0.1.12
+llama-index-core==0.10.49
+llama-index-embeddings-openai==0.1.10
+llama-index-indices-managed-llama-cloud==0.1.6
+llama-index-legacy==0.9.48
+llama-index-llms-openai==0.1.22
+llama-index-multi-modal-llms-openai==0.1.6
+llama-index-program-openai==0.1.6
+llama-index-question-gen-openai==0.1.3
+llama-index-readers-file==0.1.25
+llama-index-readers-llama-parse==0.1.4
+llama-parse==0.4.4
+llamaindex-py-client==0.1.19
+marisa-trie==1.1.1
+markdown-it-py==3.0.0
+MarkupSafe==2.1.5
+marshmallow==3.21.3
+matplotlib-inline @ file:///C:/ci/matplotlib-inline_1661934094726/work
+mdurl==0.1.2
+multidict==6.0.5
+murmurhash==1.0.10
+mypy-extensions==1.0.0
+nest-asyncio==1.6.0
+networkx==3.3
+nltk==3.8.1
+numpy==1.26.4
+oauthlib==3.2.2
+openai==1.35.3
+orjson==3.10.3
+packaging==24.1
+pandas==2.2.2
+parso @ file:///opt/conda/conda-bld/parso_1641458642106/work
+pillow==10.3.0
+platformdirs @ file:///C:/b/abs_b6z_yqw_ii/croot/platformdirs_1692205479426/work
+ply==3.11
+preshed==3.0.9
+prompt-toolkit @ file:///C:/b/abs_68uwr58ed1/croot/prompt-toolkit_1704404394082/work
+proto-plus==1.23.0
+protobuf==4.25.3
+psutil @ file:///C:/Windows/Temp/abs_b2c2fd7f-9fd5-4756-95ea-8aed74d0039flsd9qufz/croots/recipe/psutil_1656431277748/work
+psycopg2-binary==2.9.9
+pure-eval @ file:///opt/conda/conda-bld/pure_eval_1646925070566/work
+pyasn1==0.6.0
+pyasn1_modules==0.4.0
+pycparser==2.22
+pydantic==2.7.4
+pydantic_core==2.18.4
+Pygments @ file:///C:/b/abs_fay9dpq4n_/croot/pygments_1684279990574/work
+PyJWT==2.8.0
+pyparsing==3.1.2
+pypdf==4.2.0
+python-dateutil==2.9.0.post0
+python-decouple==3.8
+python-dotenv==1.0.1
+python-multipart==0.0.9
+python3-openid==3.2.0
+pytz==2024.1
+pywin32==305.1
+PyYAML==6.0.1
+pyzmq @ file:///C:/b/abs_89aq69t0up/croot/pyzmq_1705605705281/work
+redis==5.0.4
+regex==2024.5.15
+requests==2.32.3
+requests-oauthlib==2.0.0
+rich==13.7.1
+rsa==4.9
+safetensors==0.4.3
+shellingham==1.5.4
+six==1.16.0
+smart-open==6.4.0
+sniffio==1.3.1
+social-auth-app-django==5.4.1
+social-auth-core==4.5.4
+soupsieve==2.5
+spacy==3.7.4
+spacy-legacy==3.0.12
+spacy-loggers==1.0.5
+SQLAlchemy==2.0.31
+sqlparse==0.5.0
+srsly==2.4.8
+stack-data @ file:///opt/conda/conda-bld/stack_data_1646927590127/work
+starlette==0.37.2
+striprtf==0.0.26
+tenacity==8.4.1
+thinc==8.2.3
+tiktoken==0.7.0
+tokenizers==0.19.1
+tornado @ file:///C:/b/abs_0cbrstidzg/croot/tornado_1696937003724/work
+tqdm==4.66.4
+traitlets @ file:///C:/b/abs_e5m_xjjl94/croot/traitlets_1671143896266/work
+transformers==4.40.2
+trufflepig-py==0.1.6
+typer==0.12.3
+typing-inspect==0.9.0
+typing_extensions==4.12.2
+tzdata==2024.1
+ujson==5.10.0
+uritemplate==4.1.1
+urllib3==2.2.2
+uvicorn==0.29.0
+vine==5.1.0
+wasabi==1.1.2
+watchfiles==0.21.0
+wcwidth @ file:///Users/ktietz/demo/mc3/conda-bld/wcwidth_1629357192024/work
+weasel==0.3.4
+websockets==12.0
+wrapt==1.16.0
+yarl==1.9.4
