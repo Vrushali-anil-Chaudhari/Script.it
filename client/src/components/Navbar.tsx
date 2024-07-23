@@ -40,7 +40,7 @@ const Navbar = () => {
                         }
                         <div className='flex items-center gap-8'>
                             {
-                                !loggedInUser && (pathname == "/") ? (
+                                loggedInUser && (pathname == "/") ? (
                                     <>
                                         <Link to={"/search"} className=''>
                                             <Button type='button' variant='ghost' className='text-black border'>
@@ -54,7 +54,7 @@ const Navbar = () => {
                                 ) : null
                             }
                             {
-                                loggedInUser ? ( 
+                                !loggedInUser ? ( 
                                     <>
                                         <Link to={'/signin'} className='cursor-pointer'>Login</Link>
                                         <Link to={'/signup'}>

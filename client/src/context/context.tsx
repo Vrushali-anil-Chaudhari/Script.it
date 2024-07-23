@@ -168,6 +168,7 @@ export const ModalProvider = ({ children }: TModalProvider) => {
 
         const checkStatus = async () => {
             const statusResponse = await handleStatus(task_id);
+            console.log('checkStatus',statusResponse);
 
             if (statusResponse?.state === "SUCCESS" || statusResponse?.state === "FAILED") {
                 updateFileStatuses(statusResponse, files);
@@ -185,12 +186,20 @@ export const ModalProvider = ({ children }: TModalProvider) => {
     const updateFileStatuses = (statusResponse: StatusResponse | undefined, files: File[]) => {
         if (!statusResponse || !statusResponse.result) return;
 
-        console.log('statusResp', statusResponse);
+        console.log('statusResp', statusResponse.state);
+
+        
 
         setFileStatuses(prevStatuses => {
             return prevStatuses.map(fileStatus => {
                 const fileIndex = files.findIndex(file => file.name === fileStatus.file.name);
                 if (fileIndex !== -1 && statusResponse.result![fileIndex]) {
+                    setStatus({
+                        state: statusResponse.result![fileIndex].job_status || (statusResponse.result![fileIndex].job_status === "FAILED" && "FAILED"),
+                        message: statusResponse.message,
+                        result: {},
+                        IN_PROGRESS: 0
+                    })
                     return {
                         ...fileStatus,
                         status: statusResponse.result![fileIndex].job_status || (statusResponse.result![fileIndex].job_status === "FAILED" && "FAILED")

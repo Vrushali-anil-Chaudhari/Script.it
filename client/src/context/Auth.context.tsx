@@ -184,6 +184,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
                 message: "",
             });
             navigate("/signin");
+            setLoggedInUser({
+                username: "",
+                email: ""
+            })
         }
         catch (error) {
             return error;

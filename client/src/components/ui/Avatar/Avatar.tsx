@@ -38,22 +38,20 @@ const Avatar = () => {
     }
 
     return (
+        
         <div className='flex items-center gap-2 h-fit'>
-            {/* <div className='size-8 mt-0.5'>
-                <img onError={({ currentTarget }) => {
-                    currentTarget.onerror = null;
-                    currentTarget.src = "/assets/google-ico.png"
-                }}
-                src="https://invalid-url.com/image.png" className='size-full rounded-full' alt="" />
-            </div> */}
-            <div className='flex bg-red-4s0 items-center gap-2'>
-                <div className='h-fit flex flex-col text-left'>
-                    <p className='font-medium'>{loggedInUser.username}</p>
-                    <p className='text-xs -mt-1.5 text-subTextGrey'>{loggedInUser.email}</p>
-                </div>
-                <span>/</span>
-                <p onClick={onSubmit} className={`text-red-600 underline cursor-pointer`}>Logout</p>
-            </div>
+            {
+                loggedInUser.username && (
+                    <div className='flex bg-red-4s0 items-center gap-2'>
+                        <div className='h-fit flex flex-col text-left'>
+                            <p className='font-medium'>{loggedInUser.username}</p>
+                            <p className='text-xs -mt-1.5 text-subTextGrey'>{loggedInUser.email}</p>
+                        </div>
+                        <span>/</span>
+                        <p onClick={onSubmit} className={`text-red-600 underline cursor-pointer`}>Logout</p>
+                    </div>
+                )
+            }
         </div>
     )
 }

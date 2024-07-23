@@ -7,6 +7,8 @@ const UploadStatus = () => {
     const { files, openModal, status , modal} = useModalContext();
     const files_length = files.length;
 
+    console.log('statusstatusstatus',status);
+
     const STATUS_CLASSES = {
         SUCCESS: {
             border: "border-green-600",
@@ -47,7 +49,7 @@ const UploadStatus = () => {
                         <p className={`text-xs ${currentClasses.text}`}>{status.state}</p>
                     </div>
                     <p className={currentClasses.text}>
-                        {status.state === "FAILED" && "File Upload Failed"}
+                        {status.state === "FAILED" && status.message}
                         {status.state === "SUCCESS" && "File Upload Successful"}
                         {status.state === "IN_PROGRESS" && `Uploading ${files_length} files`}
                         {status.state === "IDLE" && "Nothing to Upload"}
