@@ -1,5 +1,5 @@
 import { X } from 'lucide-react'
-import React, from 'react'
+import React from 'react'
 import Highlighter from './Highligher'
 import { useModalContext } from '../context/context'
 
