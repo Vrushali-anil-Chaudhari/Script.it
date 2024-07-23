@@ -1,5 +1,5 @@
 import { X } from 'lucide-react'
-import React, { useEffect, useState } from 'react'
+import React, from 'react'
 import Highlighter from './Highligher'
 import { useModalContext } from '../context/context'
 
@@ -12,10 +12,10 @@ type DrawerProps = {
     document_key: string
   }
 }
-const Drawer = ({ isOpen, setOpen, data: {
+const Drawer = ({setOpen, data: {
   data, document_key
 } }: DrawerProps) => {
-  const { searchQueryResponse: { query } , GetFileContent , fileContent } = useModalContext();
+  const { searchQueryResponse:   fileContent } = useModalContext();
 
   // const [searchData , setSearchData] = useState("");
 

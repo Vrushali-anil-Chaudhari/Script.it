@@ -1,6 +1,5 @@
-import React from 'react'
 import { Button } from '../components/ui/Button'
-import { ArrowBigDownDash, ArrowBigLeftDash, ArrowLeft, ArrowRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const Home = () => {

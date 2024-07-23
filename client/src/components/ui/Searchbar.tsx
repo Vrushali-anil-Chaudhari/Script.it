@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import { useModalContext } from '../../context/context';
-import { toast } from 'sonner';
-import { API_URL } from '../../config/apiconfig';
 
 const Searchbar = () => {
     const {files , handleQuery} = useModalContext();

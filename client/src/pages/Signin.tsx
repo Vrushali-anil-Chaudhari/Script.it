@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react'
+import  { useEffect } from 'react'
 import { Button } from '../components/ui/Button'
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { LoginSchema, SigninSchema } from '../utils/validation';
-import { FieldValues, useForm } from 'react-hook-form';
+
 import { useAuth } from '../context/Auth.context';
 import { z } from 'zod';
 import { toast } from 'sonner';
@@ -11,7 +10,7 @@ import { toast } from 'sonner';
 type LoginSchemaType = z.infer<typeof SigninSchema>;
 
 const Signin = () => {
-  const { Signin, user, auth, Logout } = useAuth();
+  const { Signin, user, auth } = useAuth();
   const navigate = useNavigate();
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(SigninSchema)

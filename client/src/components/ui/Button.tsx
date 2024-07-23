@@ -1,7 +1,6 @@
 import { ButtonHTMLAttributes } from "react"
 import { cva } from 'class-variance-authority'
 import { cn } from "../../utils/cn"
-import { ArrowBigLeft } from "lucide-react"
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
     variant?: "primary" | "secondary" | "icon" | "ghost" ,

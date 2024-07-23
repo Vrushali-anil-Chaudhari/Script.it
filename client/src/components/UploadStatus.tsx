@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useModalContext } from "../context/context";
 import { Button } from "./ui/Button";
 import Modal from "./Modal";

@@ -2,7 +2,6 @@ import { createContext, ReactNode, useContext, useState } from "react";
 import { apiRoutes } from "../config/apiconfig.ts";
 import { useNavigate } from 'react-router-dom';
 import { toast } from "sonner";
-import { UseFormSetError } from "react-hook-form";
 
 type User = {
     first_name?: string,
@@ -176,6 +175,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
                 },
                 body: reqData
             });
+            console.log(response)
             localStorage.removeItem("access_token");
             localStorage.removeItem("refresh_token");
             localStorage.removeItem("user");

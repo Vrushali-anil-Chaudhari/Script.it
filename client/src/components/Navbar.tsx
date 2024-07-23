@@ -5,10 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import Avatar from './ui/Avatar/Avatar';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/Auth.context';
-type User = {
-    username: string;
-    email?: string,
-};
+
 
 const Navbar = () => {
     const { pathname } = useLocation();

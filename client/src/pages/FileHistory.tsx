@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import HistorySkeleton from '../states/HistorySkeleton';
 import { useModalContext } from '../context/context';
 import { Button } from '../components/ui/Button';

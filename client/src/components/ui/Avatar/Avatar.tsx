@@ -1,21 +1,14 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React from 'react'
 import { useAuth } from '../../../context/Auth.context';
 import { useModalContext } from '../../../context/context';
-type User = {
-    username: string;
-    email?: string,
-};
+
 
 
 const Avatar = () => {
     const {Logout , loggedInUser} = useAuth();
     const {setFiles , setFileStatuses} = useModalContext();
     const refresh_token = localStorage.getItem("refresh_token") as string
-    const access_token = localStorage.getItem("access_token") as string
-    const [user , setUser] = useState<User>({
-        username:"",
-        email:""
-    })
+    
 
     // useMemo(()=>{
     //     getUser().then((user_data)=>{

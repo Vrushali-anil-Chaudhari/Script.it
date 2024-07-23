@@ -1,6 +1,5 @@
 import { Text } from 'lucide-react'
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react'
 import Drawer from './Drawer'
 import { useModalContext } from '../context/context'
 

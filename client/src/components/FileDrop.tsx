@@ -1,12 +1,9 @@
-import { useState } from "react"
 import useFileDrop from "../hooks/useFileDrop"
-import { z } from "zod"
 import { validateFile } from "../utils/fileValidator"
 import { toast } from 'sonner';
 
 
 // types
-type MimeTypes = ".pdf"
 type ConfigTypes = {
     manualFile?: boolean,
     mimeType?: ".pdf"

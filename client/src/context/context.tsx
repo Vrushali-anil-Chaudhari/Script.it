@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useState } from "react";
-import { API_URL, apiRoutes } from "../config/apiconfig";
+import { apiRoutes } from "../config/apiconfig";
 import { toast } from "sonner";
 
 
@@ -50,10 +50,7 @@ interface MutatedSearchResponse extends SearchResponse {
     error: string | Error
 }
 
-type Status = {
-    state: StatusState,
-    IN_PROGRESS: number,
-}
+
 
 type StatusState = "SUCCESS" | "FAILED" | "IN_PROGRESS" | "IDLE"
 interface StatusResponse {
@@ -90,7 +87,7 @@ export const useModalContext = () => {
 export const ModalProvider = ({ children }: TModalProvider) => {
     const access_token = localStorage.getItem("access_token") as string;
     const [modal, setModal] = useState<boolean>(false);
-    const [isUploading, setIsUploading] = useState<boolean>(false);
+    // const [isUploading, setIsUploading] = useState<boolean>(false);
     const [fileStatuses, setFileStatuses] = useState<FileStatus[]>([]);
     const [fileContent , setFileContent] = useState<string>("")
     const [status, setStatus] = useState<StatusResponse>({
@@ -124,7 +121,7 @@ export const ModalProvider = ({ children }: TModalProvider) => {
             IN_PROGRESS: 0
         }));
         setFileStatuses(prevStatuses => [...prevStatuses, ...initialFileStatuses]);
-        setIsUploading(true);
+        // setIsUploading(true);
 
         const fileFormData = new FormData();
         acceptedFiles.forEach((file) => {
@@ -158,7 +155,7 @@ export const ModalProvider = ({ children }: TModalProvider) => {
         } catch (error) {
             console.error('Upload Error:', error);
         } finally {
-            setIsUploading(false);
+            // setIsUploading(false);
         }
     };
     console.log('status', status);

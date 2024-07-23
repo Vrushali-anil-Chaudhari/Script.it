@@ -1,17 +1,12 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Modal from '../components/Modal'
 import { useModalContext } from '../context/context';
-import Skeleton from '../states/Skeleton';
 import ResultCard from '../components/ResultCard';
 import Searchbar from '../components/ui/Searchbar';
-import { Button } from '../components/ui/Button';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
-import Drawer from '../components/Drawer';
+
 
 const Search = () => {
   const { modal, searchQueryResponse } = useModalContext();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [results, setResults] = useState([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false)
 
 
