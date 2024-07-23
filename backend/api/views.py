@@ -237,7 +237,7 @@ class TaskStatusView(APIView):
                 if task_result.info.get('progress', 0) == 99:
                     response['result'] = None
                     response['progress'] = 99
-                    response['state'] = 'PROGRESS'
+                    response['state'] = 'IN_PROGRESS'
                     response['message'] = 'File Upload In progress'
                     current_user = request.user
                     try:
@@ -272,7 +272,7 @@ class TaskStatusView(APIView):
                     else:
                         response['result'] = result
                         response['progress'] = 99
-                        response['state'] = 'PROGRESS'
+                        response['state'] = 'IN_PROGRESS'
                         response['message'] = 'File Upload In progress'
                 elif task_result.info.get('progress', -1) == -1:
                     response['state'] = 'FAILED'

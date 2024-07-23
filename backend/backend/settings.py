@@ -63,7 +63,7 @@ ROOT_URLCONF = "backend.urls"
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # React app URL
-    "https://dawn-officer-walking-dodge.trycloudflare.com",
+    "https://conference-tips-hepatitis-tba.trycloudflare.com",
 ]
 
 TEMPLATES = [
@@ -93,28 +93,13 @@ DATABASES = {
     }
 }
 
-import dj_database_url
-DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DATABASE_URL')
+# import dj_database_url
+# DATABASES = {
+#     'default': dj_database_url.parse(os.environ.get('DATABASE_URL')
         
-    )
-}
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'rest_framework.authentication.SessionAuthentication',
-#         'rest_framework.authentication.BasicAuthentication',
-#     ),
-#     'DEFAULT_PERMISSION_CLASSES': (
-#         'rest_framework.permissions.IsAuthenticated',
-#     ),
+#     )
 # }
-# Password validation
-# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-#     'PAGE_SIZE': 100
-# }
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
