@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECERET_KEY')
 LLAMA_KEY = os.getenv('LlamaParse_KEY')
-
+BACKEND_URL = os.getenv('BACKEND_URL')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
@@ -63,7 +63,7 @@ ROOT_URLCONF = "backend.urls"
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # React app URL
-    "https://conference-tips-hepatitis-tba.trycloudflare.com",
+    BACKEND_URL,
 ]
 
 TEMPLATES = [
