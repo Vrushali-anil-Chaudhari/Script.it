@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: "JetBrains Mono", monospace;
+    font-optical-sizing: auto;
+}
+
+/* @keyframes shine {
+    from {
+        left: -4rem;
+    } 
+    to {
+        left: 7rem;
+    }
+}
+
+.animate-shsine {
+    animation-name: shine;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+} */
+
+@keyframes opacity-on {
+    from{
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.animate-opacity-on {
+    animation-name: opacity-on;
+    animation-duration: .3s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: backwards;
+}
+
+
+@keyframes drawer{
+    from {
+        transform: translateY(600px);
+    }
+    to {
+        transform: translateY(100% - 600px);
+    }
+}
+.animate-drawer{ 
+    animation-name: drawer;
+    animation-duration: 0.7s;
+    animation-iteration-count: 1;
+    animation-fill-mode: backwards;
+}
+
+
+
+@keyframes blur{
+    from {
+        filter: blur(10px);
+    }
+    to {
+        filter: blur(0px);
+    }
+}
+
+.animate-blur{ 
+    animation-name: blur;
+    animation-duration: 0.72s;
+    animation-iteration-count: 1;
+}
