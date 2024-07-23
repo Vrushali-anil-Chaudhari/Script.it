@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import dj_database_url
 from pathlib import Path
 import os
 from dotenv import load_dotenv
@@ -26,9 +26,9 @@ SECRET_KEY = os.getenv('SECERET_KEY')
 LLAMA_KEY = os.getenv('LlamaParse_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["afraid-subaru-wellington-began.trycloudflare.com", "localhost:5173",  ]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -63,7 +63,7 @@ ROOT_URLCONF = "backend.urls"
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # React app URL
-    "https://afraid-subaru-wellington-began.trycloudflare.com",
+    "https://dawn-officer-walking-dodge.trycloudflare.com",
 ]
 
 TEMPLATES = [
@@ -84,9 +84,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "backend.wsgi.application"
 
-
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+ASGI_APPLICATION = 'backend.asgi.application'
 
 DATABASES = {
     "default": {
@@ -95,6 +93,12 @@ DATABASES = {
     }
 }
 
+import dj_database_url
+DATABASES = {
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL')
+        
+    )
+}
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES': (
 #         'rest_framework.authentication.SessionAuthentication',
@@ -150,7 +154,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
-
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR , 'media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 

@@ -46,10 +46,10 @@ class FileUploadView(APIView):
         index_id = profile.index_id
         print(index_id)
         files = request.FILES.getlist('files')
-        data_folder = os.path.join(settings.BASE_DIR, 'data',str(index_id))
+        data_folder = os.path.join(settings.MEDIA_ROOT, str(index_id))
         if not os.path.exists(data_folder):
             os.makedirs(data_folder)
-
+      
         for file in files:
             file_path = os.path.join(data_folder, file.name)
             with open(file_path, 'wb+') as destination:
@@ -92,7 +92,7 @@ class FileUploadView(APIView):
 
         except Exception as e:
             return Response({'error': str(e)}, status= status.HTTP_500_INTERNAL_SERVER_ERROR)
-        filepath = os.path.join(settings.BASE_DIR, 'data',str(index_id),document_key)
+        filepath = os.path.join(settings.MEDIA_ROOT, str(index_id),document_key)
         os.remove(filepath)
         return Response({'status': delete_response,'message':"Single file deleted"}) 
 
@@ -105,7 +105,7 @@ class FileUploadView(APIView):
         
         index_id = profile.index_id
         
-        filepath = os.path.join(settings.BASE_DIR, 'data', str(index_id), document_key)
+        filepath = os.path.join(settings.MEDIA_ROOT, str(index_id), document_key)
 
         if not os.path.isfile(filepath):
             raise Http404("File does not exist")
@@ -125,6 +125,7 @@ class FileUploadView(APIView):
             response = {}
             response['text'] = documents[0].text
             response['message'] = 'Content Received'
+            print(response)
             return Response(response)
 
         except Exception as e:
@@ -150,7 +151,7 @@ class DeleteAll(APIView):
             delete_response = client.delete_index(str(index_id))
         except Exception as e:
             return Response({'error': str(e)}, status= status.HTTP_500_INTERNAL_SERVER_ERROR)
-        directory = os.path.join(settings.BASE_DIR, 'data',str(index_id))
+        directory = os.path.join(settings.MEDIA_ROOT,str(index_id))
         shutil.rmtree(directory)
         return Response({'status': delete_response,"message":'All files cleared'}) 
     
@@ -168,11 +169,24 @@ class GetResults(APIView):
         client = Trufflepig(settings.TRUFFLE_PIG_KEY)
         index_id = profile.index_id
         index = client.get_index(str(index_id))
-
+        # print(index)
         search_response = index.search(query_text= query , max_results=3)
-        print(search_response)
+       
         # print(f'Got result: {search_response[0].content} from {search_response[0].document_key}')
-        return Response({"data": search_response[0].content, "document_key":search_response[0].document_key,"message":"Results received"}) 
+        if len(search_response) == 0:
+            return Response({"total_results": len(search_response),"message" : "Document not found"})
+        else:
+          total_result = []
+          for i in range(len(search_response)):
+      #   data["id"] = i
+              data= {}
+              data["data"] = search_response[i].content
+              data["document_key"] = search_response[i].document_key
+            #   print(data, i )
+              total_result.append(data)
+              print(total_result , i)
+        #   print(total_result,len(search_response))    
+          return Response({"total_results": len(search_response),"results":total_result,"message":"Results received"}) 
 
     def get(self,request):
         current_user = request.user
@@ -233,7 +247,7 @@ class TaskStatusView(APIView):
                     index_id = profile.index_id
                     client = Trufflepig(settings.TRUFFLE_PIG_KEY)
                     index = client.get_index(str(index_id))
-                    data_folder = os.path.join(settings.BASE_DIR, 'data', str(index_id))
+                    data_folder = os.path.join(settings.MEDIA_ROOT, str(index_id))
                     dir_list = os.listdir(data_folder)
                     files_key = []
                     for i, file_name in enumerate(dir_list):

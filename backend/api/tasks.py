@@ -13,7 +13,7 @@ import traceback
 def upload_truffle_pig(self, index_id):
     try:
         print("Starting upload_truffle_pig task")
-        data_folder = os.path.join(settings.BASE_DIR, 'data', str(index_id))
+        data_folder = os.path.join(settings.MEDIA_ROOT, str(index_id))
         client = Trufflepig(settings.TRUFFLE_PIG_KEY)
         print(f"Index ID: {index_id}")
         

@@ -165,3 +165,4 @@ backend/api/migrations
 backend/authenticate/migrations
 dump.rdb
 data
+media/
