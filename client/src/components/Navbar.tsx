@@ -23,7 +23,7 @@ const Navbar = () => {
             <div className='h-[60px] border-b border-border px-4 py-2 relative'>
                 <div className='flex items-center h-full w-full max-w-[1450px] mx-auto justify-between '>
                     <Link to={'/'} className='flex items-center gap-1 w-fit pr-4'>
-                        <img src="/public/assets/revise-loop-icon-xs.svg" alt="" className='size-4' />
+                        <img src="/assets/revise-loop-icon-xs.svg" alt="" className='size-4' />
                         <p className='text-xl font-medium tracking-tighter'>Script.it</p>
 
                     </Link>
