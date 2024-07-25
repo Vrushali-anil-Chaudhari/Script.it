@@ -1,4 +1,3 @@
-import React from 'react'
 import { useAuth } from '../../../context/Auth.context';
 import { useModalContext } from '../../../context/context';
 

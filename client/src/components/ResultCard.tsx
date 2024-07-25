@@ -1,5 +1,4 @@
 import { Text } from 'lucide-react'
-import React from 'react'
 import Drawer from './Drawer'
 import { useModalContext } from '../context/context'
 

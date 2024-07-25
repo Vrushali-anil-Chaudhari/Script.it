@@ -1,5 +1,4 @@
 import { X } from 'lucide-react'
-import React from 'react'
 import Highlighter from './Highligher'
 import { useModalContext } from '../context/context'
 
@@ -27,6 +26,8 @@ const Drawer = ({setOpen, data: {
   //   })
   // },[])
 
+  console.log('fileContent',fileContent);
+
   return (
     <>
       {/* bg-neutral-200/5 */}
@@ -43,7 +44,7 @@ const Drawer = ({setOpen, data: {
             <div className='w-full h-screen overflow-auto scroll-smooth'>
               <div className='w-full h-full p-5 leading-loose'>
                 {
-                  <Highlighter content={fileContent} query={data} />
+                  <Highlighter content={fileContent.query} query={data} />
                 }
               </div>
             </div>
