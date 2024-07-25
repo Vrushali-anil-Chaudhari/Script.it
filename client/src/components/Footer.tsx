@@ -6,7 +6,7 @@ const Footer = () => {
         <div className='flex sm:flex-col flex-col md:flex-row md:items-center gap-4 max-w-[1450px] mx-auto py-4 w-full '>
             <div className='flex flex-col sm:flex-col md:flex-row md:items-center justify-between w-full gap-1 sm:gap-1 md:gap-8'>
                 <div className='flex items-center gap-1'>
-                    <img src="/public/assets/revise-loop-icon-xs.svg" alt="" className='size-4'/>
+                    <img src="/assets/revise-loop-icon-xs.svg" alt="" className='size-4'/>
                     <p className='text-xl font-medium tracking-tighter'>Script.it</p>
                 </div>
                 <div className='flex w-full justify-between text-xs'>
