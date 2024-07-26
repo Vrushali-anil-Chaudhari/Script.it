@@ -18,7 +18,7 @@ const Search = () => {
         <div className='pt-8 flex flex-col gap-3 items-center justify-center'>
           <p className='uppercase italic font-medium text-[0.6rem] md:text-xs text-subTextGrey'>SEARCH • ORGANIZE • CREATE</p>
           <div className='flex gap-2 font-extrabold text-lg md:text-2xl lg:text-4xl items-center'>
-            <img src="/public/assets/truffle-logo.svg" alt="" className='w-10' />
+            <img src="/assets/truffle-logo.svg" alt="" className='w-10' />
             <p>x Script.it</p>
           </div>
           <p className='text-subTextGrey pt-5 text-xs md:text-sm lg:text-lg'>“ Find the story you've been searching for. “</p>
