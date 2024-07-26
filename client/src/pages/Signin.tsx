@@ -64,6 +64,7 @@ const Signin = () => {
     if (user?.message) {
       setError("root", { message: user?.message })
     }
+    // set it here the clear error func.
   }, [user])
 
   console.log('user msg', user?.message);

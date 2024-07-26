@@ -30,7 +30,7 @@ const Navbar = () => {
                     <div className='hidden lg:flex items-center gap-8 w-full justify-between'>
 
                         {
-                            loggedInUser ?
+                            loggedInUser.username ?
                                 <div className='pl-6'>
                                     <Avatar />
                                 </div> : <div className='pl-6' />
@@ -51,7 +51,7 @@ const Navbar = () => {
                                 ) : null
                             }
                             {
-                                !loggedInUser ? ( 
+                                !loggedInUser.username ? ( 
                                     <>
                                         <Link to={'/signin'} className='cursor-pointer'>Login</Link>
                                         <Link to={'/signup'}>
