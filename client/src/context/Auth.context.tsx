@@ -81,6 +81,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         access_token: "",
     });
 
+    console.log('loggedInUser in context' , loggedInUser);
+
     const Signin = async (reqData: User | FormData): Promise<LoginResponse | undefined> => {
         try {
             const response = await fetch(`${apiRoutes.auth.login}`, {
@@ -109,6 +111,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
                 user,
                 message,
             });
+            setLoggedInUser({
+                username: responseData.data.user.username,
+                email: responseData.data.user.email
+            })
             setAuth({
                 access_token,
             });
@@ -152,6 +158,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
                 }
             }
             if (response.ok) {
+                setUser({
+                    user: responseData.data,
+                    message: ""
+                })
                 return {
                     data: responseData.data,
                     message: "Sucessfully Registered"
@@ -197,11 +207,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     const getUser = async () => {
         try {
+            const controller = new AbortController()
+            
             const response = await fetch(apiRoutes.auth.profile, {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${access_token}`
-                }
+                },
+                signal:controller.signal
             })
             const {data}: { data: User } = await response.json();
             if (!response.ok && response.status === 400) {
