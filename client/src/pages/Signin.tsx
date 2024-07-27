@@ -28,7 +28,8 @@ const Signin = () => {
       errors,
     },
     setError,
-    clearErrors
+    clearErrors,
+    reset
   } = form;
 
   const onSubmit =async(values: LoginSchemaType) => {
@@ -41,6 +42,7 @@ const Signin = () => {
     const response = await Signin(data);
 
     if(response?.error){
+      console.log('resspoSignin error' ,response.error);
       setError("root", {
         type: "manual",
         message: response?.error
@@ -58,14 +60,24 @@ const Signin = () => {
 
   }
 
+  console.log('userSTATE in Signin',user);
+
 
   // Just for auto set error 
   useEffect(() => {
     if (user?.message) {
       setError("root", { message: user?.message })
     }
-    // set it here the clear error func.
+    else {
+      clearErrors("root");
+    }
   }, [user])
+
+  useEffect(() => {
+    return () => {
+      reset();
+    };
+  }, [reset]);
 
   console.log('user msg', user?.message);
   return (

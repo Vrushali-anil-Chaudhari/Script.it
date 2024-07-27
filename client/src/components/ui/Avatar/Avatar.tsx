@@ -33,7 +33,7 @@ const Avatar = () => {
         
         <div className='flex items-center gap-2 h-fit'>
             {
-                loggedInUser.username && (
+                loggedInUser ? (
                     <div className='flex bg-red-4s0 items-center gap-2'>
                         <div className='h-fit flex flex-col text-left'>
                             <p className='font-medium'>{loggedInUser.username}</p>
@@ -42,7 +42,7 @@ const Avatar = () => {
                         <span>/</span>
                         <p onClick={onSubmit} className={`text-red-600 underline cursor-pointer`}>Logout</p>
                     </div>
-                )
+                ) : null
             }
         </div>
     )
