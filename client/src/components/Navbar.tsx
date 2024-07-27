@@ -13,9 +13,9 @@ const Navbar = () => {
     const [ham, setHam] = useState<boolean>(false);
     const { getUser, loggedInUser } = useAuth();
 
-    // useEffect(() => {
-    //     getUser()
-    // }, [])
+    useEffect(() => {
+        getUser()
+    }, [])
 
     console.log('loggedInUser in NAVBAR', loggedInUser);
 
