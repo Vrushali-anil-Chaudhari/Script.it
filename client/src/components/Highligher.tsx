@@ -3,6 +3,10 @@ interface HighlighterProps {
     query: string
 }
 const Highligher = ({content , query}:HighlighterProps) => {
+    console.log('inside highlighter' , {
+        content,
+        query
+    });
 
     const highlightText = (text: string, highlight: string): JSX.Element[] => {
         if (!highlight) return [<span key={0}>{text}</span>];
