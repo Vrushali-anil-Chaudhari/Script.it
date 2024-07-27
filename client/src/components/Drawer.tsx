@@ -1,6 +1,8 @@
 import { X } from 'lucide-react'
-import Highlighter from './Highligher'
+// import Highlighter from './Highligher'
 import { useModalContext } from '../context/context'
+import Markdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 type DrawerProps = {
   isOpen: boolean,
@@ -11,7 +13,7 @@ type DrawerProps = {
   }
 }
 const Drawer = ({setOpen, data: {
-  data, document_key
+  document_key
 } }: DrawerProps) => {
   const { searchQueryResponse  , fileContent} = useModalContext();
 
@@ -42,9 +44,10 @@ const Drawer = ({setOpen, data: {
             </div>
             <div className='w-full h-screen overflow-auto scroll-smooth'>
               <div className='w-full h-full p-8 leading-loose'>
-              {/* <Markdown remarkPlugins={[remarkGfm]} > */}
-                <Highlighter content={fileContent} query={data} />
-              {/* </Markdown> */}
+               <Markdown remarkPlugins={[remarkGfm]} >
+                {fileContent}
+               </Markdown>
+                {/* <Highlighter content={fileContent} query={data} /> */}
               </div>
             </div>
           </div>
