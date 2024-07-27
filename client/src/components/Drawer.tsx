@@ -1,8 +1,6 @@
 import { X } from 'lucide-react'
 import Highlighter from './Highligher'
 import { useModalContext } from '../context/context'
-import Markdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
 
 type DrawerProps = {
   isOpen: boolean,
