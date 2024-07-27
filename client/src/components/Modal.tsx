@@ -18,7 +18,7 @@ const Modal = () => {
   //   setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
   // };
 
-  console.log('files', files);
+  console.log('final_files', fileStatuses);
 
   const handleClearFiles = async () => {
     try {
