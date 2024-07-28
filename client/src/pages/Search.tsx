@@ -30,18 +30,17 @@ const Search = () => {
         <div>
           <div className='flex items-center justify-between px-4'>
             <p className='text-subTextGrey text-xs sm:text-xs md:text-sm text-left md:text-center'>Total {searchQueryResponse.total_results} Results found </p>
-            {/* <div className='flex items-center gap-4'>
-              <Button disabled={true} type='button' variant='primary' iconType='icon' Icon={ArrowLeft}>Left</Button>
-              <p>1</p>
-              <Button type='button' variant='primary' iconType='icon' Icon={ArrowRight}>Right</Button>
-            </div> */}
           </div>
 
             <div className={`grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center place-items-center gap-4 w-full py-10`}>
               {
-                searchQueryResponse.results?.map((searchedData) => (
-                  <ResultCard data={searchedData} isOpen={isDrawerOpen} setOpen={setIsDrawerOpen} />
-                ))
+                searchQueryResponse.results?.map((searchedData) => {
+                  console.log('each data mapped', searchedData);
+                  return (
+                    <ResultCard data={searchedData} isOpen={isDrawerOpen} setOpen={setIsDrawerOpen} />
+                  )
+                }
+                )
               }
             </div>
           

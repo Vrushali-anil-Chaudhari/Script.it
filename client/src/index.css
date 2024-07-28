@@ -76,3 +76,8 @@ body {
     animation-duration: 0.72s;
     animation-iteration-count: 1;
 }
+
+
+.highlight { 
+    background-color: yellow;
+}
