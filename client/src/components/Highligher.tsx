@@ -20,6 +20,7 @@ const Highligher = ({content , query}:HighlighterProps) => {
             )
         );
     };
+    console.log('highlightTexthighlightText',highlightText(content , query) );
 
   return (
     <>
