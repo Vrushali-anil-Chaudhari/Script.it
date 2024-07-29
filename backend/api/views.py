@@ -85,12 +85,14 @@ class FileUploadView(APIView):
         index_id = profile.index_id
         
         try:
-            print(str(index_id))
+            
             index = client.get_index(str(index_id))
             print(index)
+           
             delete_response = index.delete_documents([str(document_key)])
-
+            print("delteeee",delete_response)
         except Exception as e:
+            print(e)
             return Response({'error': str(e)}, status= status.HTTP_500_INTERNAL_SERVER_ERROR)
         filepath = os.path.join(settings.MEDIA_ROOT, str(index_id),document_key)
         os.remove(filepath)
@@ -176,17 +178,18 @@ class GetResults(APIView):
         if len(search_response) == 0:
             return Response({"total_results": len(search_response),"message" : "Document not found"})
         else:
-          total_result = []
-          for i in range(len(search_response)):
-      #   data["id"] = i
-              data= {}
-              data["data"] = search_response[i].content
-              data["document_key"] = search_response[i].document_key
-            #   print(data, i )
-              total_result.append(data)
-              print(total_result , i)
+            total_result = []
+            document_key = []
+            for i in range(len(search_response)):
+                if search_response[i].document_key not in document_key:
+                    data= {}
+                    data["data"] = search_response[i].content
+                    data["document_key"] = search_response[i].document_key
+                    document_key.append(search_response[i].document_key)
+                    total_result.append(data)
+                    # print(total_result , i)
         #   print(total_result,len(search_response))    
-          return Response({"total_results": len(search_response),"results":total_result,"message":"Results received"}) 
+            return Response({"total_results": len(search_response),"results":total_result,"message":"Results received"}) 
 
     def get(self,request):
         current_user = request.user
