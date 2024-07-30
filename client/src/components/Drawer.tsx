@@ -10,7 +10,7 @@ type DrawerProps = {
   isOpen: boolean,
   setOpen: (value: boolean) => void,
   data: {
-    data: string,
+    data: string[],
     document_key: string,
   },
 };
@@ -38,7 +38,7 @@ const Drawer = ({ setOpen, data: { data, document_key } }: DrawerProps) => {
                       return (
                           <Highlighter
                             highlightClassName="highlight"
-                            searchWords={[data]}
+                            searchWords={data}
                             autoEscape={true}
                             textToHighlight={children ? String(children) : ''}
                           />

@@ -7,7 +7,7 @@ interface ResultCardProps {
   isOpen: boolean
   setOpen: (value: boolean) => void,
   data: {
-    data: string
+    data: string[]
     document_key: string
   }
 }
@@ -15,7 +15,7 @@ interface ResultCardProps {
 const ResultCard = ({ data }: ResultCardProps) => {
   const { GetFileContent, setFileContent } = useModalContext();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [drawerData, setDrawerData] = useState<{ data: string, document_key: string } | null>(null);
+  const [drawerData, setDrawerData] = useState<{ data: string[], document_key: string } | null>(null);
 
   const handleViewDocument = () => {
     console.log('clicked On Data with Document key : => ', data, "with key", data.document_key);
