@@ -38,7 +38,7 @@ type TModalProvider = {
 }
 interface SearchResponse {
     results: {
-        data: string
+        data: string[]
         document_key: string
     }[] | null,
     total_results: number
