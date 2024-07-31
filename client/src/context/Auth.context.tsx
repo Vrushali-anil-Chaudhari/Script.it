@@ -206,8 +206,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     };
 
     const getUser = async () => {
+        const controller = new AbortController()
         try {
-            const controller = new AbortController()
             
             const response = await fetch(apiRoutes.auth.profile, {
                 method: "GET",

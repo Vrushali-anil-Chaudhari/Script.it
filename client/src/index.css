@@ -81,3 +81,31 @@ body {
 .highlight { 
     background-color: yellow;
 }
+
+.loader {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    display: block;
+    position: relative;
+    color: #767676;
+    box-sizing: border-box;
+    animation: animloader 1s linear infinite alternate;
+}
+  
+@keyframes animloader {
+    0% {
+        box-shadow: -28px -8px, -10px 0, 10px 0, 28px 0;
+    }
+    33% {
+        box-shadow: -28px 0px, -10px -8px, 10px 0, 28px 0;
+    }
+    66% {
+        box-shadow: -28px 0px, -10px 0, 10px -8px, 28px 0;
+    }
+    100% {
+        box-shadow: -28px 0, -10px 0, 10px 0, 28px -8px;
+    }
+}
+
+  

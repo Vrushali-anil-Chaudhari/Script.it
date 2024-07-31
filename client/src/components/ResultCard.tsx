@@ -14,16 +14,19 @@ interface ResultCardProps {
 
 const ResultCard = ({ data }: ResultCardProps) => {
   const { GetFileContent, setFileContent } = useModalContext();
+  const [isLoading , setIsLoading] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [drawerData, setDrawerData] = useState<{ data: string[], document_key: string } | null>(null);
 
   const handleViewDocument = () => {
+    setIsLoading(true)
     console.log('clicked On Data with Document key : => ', data, "with key", data.document_key);
     GetFileContent(data.document_key).then((fileData) => {
       if (!fileData) return;
       setFileContent(fileData.text);
       setDrawerData({ data: data.data, document_key: data.document_key });
       setIsDrawerOpen(true);
+      setIsLoading(false)
     });
   }
 
@@ -36,11 +39,19 @@ const ResultCard = ({ data }: ResultCardProps) => {
           </div>
           <p className='font-medium'>{data.document_key}</p>
         </div>
-        <div className='pt-4 flex flex-col gap-3'>
-          <div className='max-w-[320px] w-full'>
+        <div className={`pt-4 flex flex-col gap-3 justify-start items-start ${isLoading ? "pl-20" : "pl-1"}`}>
+          {/* <div className='max-w-[320px] w-full'>
             <p className='font-normal text-subTextGrey truncate'>{data.data}</p>
-          </div>
-          <p onClick={handleViewDocument} className='text-reddish'>View Document</p>
+          </div> */}
+          {
+            isLoading ? (
+               <>
+                  <span className="loader"></span>  
+               </>
+            ) : (
+                <p onClick={handleViewDocument} className='text-reddish'>View Document</p>
+            )
+          }
         </div>
       </div>
       {
