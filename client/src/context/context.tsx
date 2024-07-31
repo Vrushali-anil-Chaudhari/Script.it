@@ -245,6 +245,7 @@ export const ModalProvider = ({ children }: TModalProvider) => {
         }
 
         try {
+            setSearchResponseLoading(true)
             const response = await fetch(`${apiRoutes.files.searchFromFiles}`, {
                 method: "POST",
                 body: searchFormData,
@@ -271,6 +272,9 @@ export const ModalProvider = ({ children }: TModalProvider) => {
                 results: null,
                 total_results: 0
             })
+        }
+        finally {
+            setSearchResponseLoading(false)
         }
 
 

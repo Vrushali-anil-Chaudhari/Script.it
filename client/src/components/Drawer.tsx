@@ -1,9 +1,6 @@
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-
 import { X } from 'lucide-react';
-import Highlighter from 'react-highlight-words';
 import { useModalContext } from '../context/context';
+import HighlightedMarkdown from './HighlightedMarkdown';
 
 
 type DrawerProps = {
@@ -32,24 +29,7 @@ const Drawer = ({ setOpen, data: { data, document_key } }: DrawerProps) => {
             </div>
             <div className='w-full h-full overflow-auto scroll-smooth'>
               <div className='w-full h-[560px] px-6 leading-loose'>
-                <ReactMarkdown
-                  components={{
-                    p: ({ children }) => {
-                      return (
-                          <Highlighter
-                            highlightClassName="highlight"
-                            searchWords={data}
-                            autoEscape={true}
-                            textToHighlight={children ? String(children) : ''}
-                          />
-                      )
-                    }
-                    
-                  }}
-                  remarkPlugins={[remarkGfm]}
-                >
-                  {fileContent}
-                </ReactMarkdown>
+                <HighlightedMarkdown text={fileContent} wordsToHighlight={data} />
               </div>
             </div>
           </div>
@@ -60,3 +40,4 @@ const Drawer = ({ setOpen, data: { data, document_key } }: DrawerProps) => {
 };
 
 export default Drawer;
+

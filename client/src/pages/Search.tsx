@@ -3,10 +3,11 @@ import Modal from '../components/Modal'
 import { useModalContext } from '../context/context';
 import ResultCard from '../components/ResultCard';
 import Searchbar from '../components/ui/Searchbar';
+import Skeleton from '../states/Skeleton';
 
 
 const Search = () => {
-  const { modal, searchQueryResponse } = useModalContext();
+  const { modal, searchQueryResponse, isSearchResponseLoading } = useModalContext();
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false)
 
 
@@ -32,18 +33,17 @@ const Search = () => {
             <p className='text-subTextGrey text-xs sm:text-xs md:text-sm text-left md:text-center'>Total {searchQueryResponse.total_results} Results found </p>
           </div>
 
-            <div className={`grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center place-items-center gap-4 w-full py-10`}>
-              {
-                searchQueryResponse.results?.map((searchedData) => {
-                  console.log('each data mapped', searchedData);
-                  return (
-                    <ResultCard data={searchedData} isOpen={isDrawerOpen} setOpen={setIsDrawerOpen} />
-                  )
-                }
-                )
-              }
-            </div>
-          
+          <div className={` ${isSearchResponseLoading ? null : "grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3"}  justify-center place-items-center gap-4 w-full py-10`}>
+            {
+              isSearchResponseLoading ? <Skeleton /> : searchQueryResponse?.results?.length === 0 ? <p className='py-6'>No Relevant Results found!</p> : searchQueryResponse.results?.map((searchedData) => {
+                console.log('each data mapped', searchedData);
+                return (
+                  <ResultCard data={searchedData} isOpen={isDrawerOpen} setOpen={setIsDrawerOpen} />
+                );
+              })
+            }
+          </div>
+
         </div >
         {
           modal && <Modal />
