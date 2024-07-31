@@ -12,32 +12,24 @@ const Layout = ({ children }: LayoutProps) => {
   const {pathname} = useLocation()
   return (
     <>
-      <div className={`flex flex-col w-full tracking-tighter relative`}>
+      <div className={`w-full flex flex-col justify-between max-h-screen h-screen overflow-auto`}>
         <AuthProvider>
           <ModalProvider>
-            <Navbar />
-            <div className={`max-w-[1450px] mx-auto px-4 w-full ${pathname !== "/search" ? "lg:h-[calc(100vh-140px)]" : "lg:h-[calc(100vh-140px)]" }`}>
-              {children}
+            <div className=''>
+              <Navbar />
+              <div className={`max-w-[1450px] w-full mx-auto px-4`}>
+                {children}
+              </div>
             </div>
-            {/* <div className={`max-w-[1450px] mx-auto px-4 w-full ${pathname !== "/search" ? "lg:h-[calc(100vh-140px)]" : "lg:h-[calc(100vh-140px)]" }`}>
-              {children}
-            </div> */}
             <Footer />
             <Toaster />
           </ModalProvider>
         </AuthProvider>
       </div>
-    </>
-  )
-}
-
-export default Layout
-
-{/* <div className={`tracking-tighter flex flex-col h-screen w-full relative overflow-auto`}>
-        <AuthProvider>
+        {/* <AuthProvider>
           <ModalProvider>
             <Navbar />
-            <div className='max-w-[1450px] mx-auto px-4 w-full lg:h-[calc(100vh-140px)]'>
+            <div className={`max-w-[1450px] bg-red-400 mx-auto px-4 w-full ${pathname !== "/search" ? "lg:h-[calc(100vh-140px)]" : "h-fit" }`}>
               {children}
             </div>
             <Footer />
@@ -45,3 +37,8 @@ export default Layout
           </ModalProvider>
         </AuthProvider>
       </div> */}
+    </>
+  )
+}
+
+export default Layout
