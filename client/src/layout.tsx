@@ -4,12 +4,12 @@ import Footer from './components/Footer'
 import { Toaster } from 'sonner';
 import { ModalProvider } from './context/context';
 import { AuthProvider } from './context/Auth.context';
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 type LayoutProps = {
   children: React.ReactNode
 }
 const Layout = ({ children }: LayoutProps) => {
-  const {pathname} = useLocation()
+  // const {pathname} = useLocation()
   return (
     <>
       <div className={`w-full flex flex-col justify-between max-h-screen h-screen overflow-auto`}>
