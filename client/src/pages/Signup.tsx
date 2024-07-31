@@ -30,7 +30,8 @@ const Signup = () => {
       errors,
     },
     setError,
-    clearErrors
+    clearErrors,
+    reset
   } = form;
 
   const onSubmit = async (values: LoginSchemaType) => {
@@ -76,7 +77,18 @@ const Signup = () => {
     if (user?.message) {
       setError("root", { message: user?.message })
     }
+    else {
+      clearErrors("root");
+    }
   }, [user])
+  useEffect(() => {
+    return () => {
+      reset();
+    };
+  }, [reset]);
+
+  console.log('userSTATE in Register',user);
+
 
   console.log('user msg', user?.message);
   return (

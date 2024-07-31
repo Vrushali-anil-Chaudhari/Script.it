@@ -1,50 +1,70 @@
 import { Text } from 'lucide-react'
 import Drawer from './Drawer'
 import { useModalContext } from '../context/context'
+import { useState } from 'react'
 
 interface ResultCardProps {
   isOpen: boolean
   setOpen: (value: boolean) => void,
   data: {
-    data: string
+    data: string[]
     document_key: string
   }
 }
 
-const ResultCard = ({ isOpen, setOpen, data }: ResultCardProps) => {
-  const { GetFileContent , setFileContent } = useModalContext();
+const ResultCard = ({ data }: ResultCardProps) => {
+  const { GetFileContent, setFileContent } = useModalContext();
+  const [isLoading , setIsLoading] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [drawerData, setDrawerData] = useState<{ data: string[], document_key: string } | null>(null);
 
-  // const [searchData , setSearchData] = useState("");
-
-
-  const handleViewDocument=()=>{
-    GetFileContent(data.document_key).then((data)=>{
-      if(!data) return;
-      setFileContent(data.text)
-   })
+  const handleViewDocument = () => {
+    setIsLoading(true)
+    console.log('clicked On Data with Document key : => ', data, "with key", data.document_key);
+    GetFileContent(data.document_key).then((fileData) => {
+      if (!fileData) return;
+      setFileContent(fileData.text);
+      setDrawerData({ data: data.data, document_key: data.document_key });
+      setIsDrawerOpen(true);
+      setIsLoading(false)
+    });
   }
+
   return (
     <>
-      {/* w-[250px] h-[120px]  */}
-      <div onClick={() => setOpen(true)} className='border border-subTextGrey/5 bg-reddish/5 w-full sm:w-full rounded-xl p-5 cursor-pointer'>
+      <div className='border border-subTextGrey/5 bg-reddish/5 w-full sm:w-full rounded-xl p-5 cursor-pointer'>
         <div className='flex items-center gap-4'>
           <div className='flex items-center justify-center rounded-full size-10 bg-white border border-border'>
             <Text className='text-reddish' />
           </div>
           <p className='font-medium'>{data.document_key}</p>
         </div>
-        <div className='pt-4 flex flex-col gap-3'>
-          <div className='max-w-[320px] w-full'>
+        <div className={`pt-4 flex flex-col gap-3 justify-start items-start ${isLoading ? "pl-20" : "pl-1"}`}>
+          {/* <div className='max-w-[320px] w-full'>
             <p className='font-normal text-subTextGrey truncate'>{data.data}</p>
-          </div>
-          <p onClick={handleViewDocument} className='text-reddish'>View Document</p>
+          </div> */}
+          {
+            isLoading ? (
+               <>
+                  <span className="loader"></span>  
+               </>
+            ) : (
+                <p onClick={handleViewDocument} className='text-reddish'>View Document</p>
+            )
+          }
         </div>
       </div>
       {
-        isOpen ? <Drawer setOpen={setOpen} data={data} isOpen={isOpen} /> : null
+        isDrawerOpen && drawerData && (
+          <Drawer
+            setOpen={setIsDrawerOpen}
+            data={drawerData}
+            isOpen={isDrawerOpen}
+          />
+        )
       }
     </>
   )
 }
 
-export default ResultCard
+export default ResultCard;
