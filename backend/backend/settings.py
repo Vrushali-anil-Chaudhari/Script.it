@@ -63,7 +63,10 @@ ROOT_URLCONF = "backend.urls"
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # React app URL
-    "https://conference-tips-hepatitis-tba.trycloudflare.com",
+    "https://extreme-resistance-mas-ensures.trycloudflare.com",
+    "https://script-it-vrushali.vercel.app",
+    "https://script-it.vercel.app",
+    "https://script-gtt5vyohj-vrushali.vercel.app"
 ]
 
 TEMPLATES = [
