@@ -4,7 +4,7 @@ type FileListProps = {
     files: {
         file: File,
         status: "SUCCESS" | "FAILED" | "IN_PROGRESS" | "IDLE",
-        progress: number
+        progress?: number
     }[],
 }
 const FileList = ({files}:FileListProps) => {

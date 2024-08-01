@@ -15,7 +15,7 @@ from authenticate.models import CustomUser
 from llama_parse import LlamaParse
 import shutil
 import time
-
+from api.utils import remove_stopwords,most_repeated_words
 nest_asyncio.apply()
 
 
@@ -85,12 +85,14 @@ class FileUploadView(APIView):
         index_id = profile.index_id
         
         try:
-            print(str(index_id))
+            
             index = client.get_index(str(index_id))
             print(index)
+           
             delete_response = index.delete_documents([str(document_key)])
-
+            print("delteeee",delete_response)
         except Exception as e:
+            print(e)
             return Response({'error': str(e)}, status= status.HTTP_500_INTERNAL_SERVER_ERROR)
         filepath = os.path.join(settings.MEDIA_ROOT, str(index_id),document_key)
         os.remove(filepath)
@@ -113,19 +115,21 @@ class FileUploadView(APIView):
         try:
             parser = LlamaParse(
                 api_key= settings.LLAMA_KEY,  # can also be set in your env as LLAMA_CLOUD_API_KEY
-                result_type="markdown",  # "markdown" and "text" are available
-                num_workers=4,  # if multiple files passed, split in `num_workers` API calls
+                result_type="text",  # "markdown" and "text" are available
+                num_workers=6,  # if multiple files passed, split in `num_workers` API calls
                 verbose=True,
                 language="en",  # Optionally you can define a language, default=en
+                skip_diagonal_text=True,
+                fast_mode=True 
             )
             
             documents = parser.load_data(filepath)
-
+            print("parsing done")
             # Create an HttpResponse with the file content
             response = {}
-            response['text'] = documents[0].text
+            response['text'] = documents[0].text.replace('---',"\n")
             response['message'] = 'Content Received'
-            print(response)
+            # print(response)
             return Response(response)
 
         except Exception as e:
@@ -161,6 +165,8 @@ class GetResults(APIView):
 
     def post(self, request):
         query = request.data.get('query')
+        query = remove_stopwords(query)
+        print("query", query)
         current_user = request.user
         try:
          profile = CustomUser.objects.get(username=current_user.username, email=current_user.email)
@@ -170,23 +176,47 @@ class GetResults(APIView):
         index_id = profile.index_id
         index = client.get_index(str(index_id))
         # print(index)
-        search_response = index.search(query_text= query , max_results=3)
+        search_response = index.search(query_text= query)
        
-        # print(f'Got result: {search_response[0].content} from {search_response[0].document_key}')
+        # print(f'Got result: {search_response} ')
         if len(search_response) == 0:
             return Response({"total_results": len(search_response),"message" : "Document not found"})
         else:
-          total_result = []
-          for i in range(len(search_response)):
-      #   data["id"] = i
-              data= {}
-              data["data"] = search_response[i].content
-              data["document_key"] = search_response[i].document_key
-            #   print(data, i )
-              total_result.append(data)
-              print(total_result , i)
-        #   print(total_result,len(search_response))    
-          return Response({"total_results": len(search_response),"results":total_result,"message":"Results received"}) 
+            # total_result = []
+            # document_key = []
+            # for i in range(len(search_response)):
+            #     keywords = {}
+            #     if search_response[i].document_key not in document_key:
+            #         data= {}
+            #         data["data"] = search_response[i].content
+            #         data["document_key"] = search_response[i].document_key
+            #         keywords[str(search_response[i].document_key)] = [search_response[i].content]
+            #         document_key.append(search_response[i].document_key)
+            #         total_result.append(data)
+            #     else:
+            #         keywords[str(search_response[i].document_key)] = [search_response[i].content]
+            total_result = []
+            document_key_map = {}  # Dictionary to map document_key to their respective data lists
+            repeated_word = ""
+            for response in search_response:
+                document_key = response.document_key
+                content = response.content
+                repeated_word = repeated_word + " " + str(content)
+                if document_key not in document_key_map:
+                    # Create a new entry for a unique document_key
+                    document_key_map[document_key] = {
+                        
+                        "document_key": document_key
+                    }
+                
+            print(repeated_word)
+            highlighted_words = most_repeated_words(repeated_word, query)
+            print(highlighted_words)
+            for key in document_key_map:
+             document_key_map[key]['data'] = highlighted_words
+            total_result = list(document_key_map.values()) 
+            print(total_result,len(search_response))   
+            return Response({"total_results": len(total_result),"results":total_result,"message":"Results received"}) 
 
     def get(self,request):
         current_user = request.user
@@ -228,7 +258,7 @@ class TaskStatusView(APIView):
                 'result': None,
                 'message': 'File Upload In progress'
             }
-            print(response)
+            # print(response)
             if task_result.state == 'PENDING':
                 response['progress'] = 0
             elif task_result.state == 'PROGRESS':

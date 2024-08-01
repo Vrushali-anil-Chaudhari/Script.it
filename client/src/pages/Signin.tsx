@@ -1,17 +1,18 @@
-import React, { useEffect } from 'react'
+import  { useEffect } from 'react'
 import { Button } from '../components/ui/Button'
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { LoginSchema, SigninSchema } from '../utils/validation';
-import { FieldValues, useForm } from 'react-hook-form';
+
 import { useAuth } from '../context/Auth.context';
 import { z } from 'zod';
 import { toast } from 'sonner';
+import { SigninSchema } from '../utils/validation';
+import { useForm } from 'react-hook-form';
 
 type LoginSchemaType = z.infer<typeof SigninSchema>;
 
 const Signin = () => {
-  const { Signin, user, auth, Logout } = useAuth();
+  const { Signin, user, auth } = useAuth();
   const navigate = useNavigate();
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(SigninSchema)
@@ -27,7 +28,8 @@ const Signin = () => {
       errors,
     },
     setError,
-    clearErrors
+    clearErrors,
+    reset
   } = form;
 
   const onSubmit =async(values: LoginSchemaType) => {
@@ -40,6 +42,7 @@ const Signin = () => {
     const response = await Signin(data);
 
     if(response?.error){
+      console.log('resspoSignin error' ,response.error);
       setError("root", {
         type: "manual",
         message: response?.error
@@ -57,13 +60,24 @@ const Signin = () => {
 
   }
 
+  console.log('userSTATE in Signin',user);
+
 
   // Just for auto set error 
   useEffect(() => {
     if (user?.message) {
       setError("root", { message: user?.message })
     }
+    else {
+      clearErrors("root");
+    }
   }, [user])
+
+  useEffect(() => {
+    return () => {
+      reset();
+    };
+  }, [reset]);
 
   console.log('user msg', user?.message);
   return (

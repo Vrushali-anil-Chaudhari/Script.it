@@ -1,26 +1,13 @@
 import { File } from 'lucide-react'
-import React from 'react'
-import { useModalContext } from '../context/context';
 
-type StatusState = "SUCCESS" | "FAILED" | "PROGRESS" | "IDLE"
 
-interface StatusResponse {
-    state: StatusState,
-    IN_PROGRESS: number,
-    result: {
-        [key: number]: {
-            document_key: string,
-            job_status: "SUCCESS" | "FAILED" | "IN_PROGRESS" | "IDLE"
-        }
-    } | null,
-    message: string
-}
+
 
 const FileRow = ({ files }: {
     files: {
         file: File,
         status:  "SUCCESS" | "FAILED" | "IN_PROGRESS" | "IDLE",
-        progress: number
+        progress?: number
     },
 }) => {
     // const { files, openModal, status } = useModalContext();

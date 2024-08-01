@@ -1,17 +1,15 @@
 import { X } from 'lucide-react'
-import React, { useState } from 'react'
 import FileDrop from './FileDrop'
-import FileRow from './FileRow';
 import FileList from './FileList';
 import { Button } from './ui/Button';
 import { useModalContext } from '../context/context';
-import { API_URL, apiRoutes } from '../config/apiconfig';
+import {  apiRoutes } from '../config/apiconfig';
 import { toast } from 'sonner';
 
 
 
 const Modal = () => {
-  const { closeModal, files, setFiles, handleDrop, modal , status , fileStatuses , setFileStatuses } = useModalContext();
+  const { closeModal, files, setFiles, handleDrop, modal , fileStatuses , setFileStatuses } = useModalContext();
   const access_token = localStorage.getItem("access_token") as string
   // const [files, setFiles] = useState<File[] | []>([]);
 
@@ -20,7 +18,7 @@ const Modal = () => {
   //   setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
   // };
 
-  console.log('files', files);
+  console.log('final_files', fileStatuses);
 
   const handleClearFiles = async () => {
     try {
@@ -33,7 +31,7 @@ const Modal = () => {
 
       if (res.status === 200) {
         // files = await res.json() as string[];
-        const data = await res.json();
+        // const data = await res.json();
         setFiles([])
         setFileStatuses([])
       }
@@ -64,7 +62,9 @@ const Modal = () => {
             </div>
           </div>
           <div className={`${files.length ? "h-[250px]" : null} overflow-auto`}>
+            {/* //@ts-ignore */}
             <FileList files={fileStatuses}/>
+    
           </div>
           <div className='w-full text-center flex items-center justify-center'>
             <div className='w-fit'>

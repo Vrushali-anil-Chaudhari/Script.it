@@ -1,12 +1,9 @@
-import { useState } from "react"
 import useFileDrop from "../hooks/useFileDrop"
-import { z } from "zod"
 import { validateFile } from "../utils/fileValidator"
 import { toast } from 'sonner';
 
 
 // types
-type MimeTypes = ".pdf"
 type ConfigTypes = {
     manualFile?: boolean,
     mimeType?: ".pdf"
@@ -20,7 +17,7 @@ type FileDropProps = {
 
 // File Schema
 const MAX_SIZE = 50 * 1024 * 1024; // 50MB
-const FileDrop = ({ onDrop, config: { manualFile, mimeType } }: FileDropProps) => {
+const FileDrop = ({ onDrop, config: { manualFile } }: FileDropProps) => {
     const { isDragActive, handleDragEnter, handleDragLeave, handleDrop, handleDragOver } = useFileDrop({
         onDrop: (files) => {
             const validFiles = files.filter(file => {

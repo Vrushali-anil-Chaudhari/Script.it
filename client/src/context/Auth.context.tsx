@@ -2,7 +2,6 @@ import { createContext, ReactNode, useContext, useState } from "react";
 import { apiRoutes } from "../config/apiconfig.ts";
 import { useNavigate } from 'react-router-dom';
 import { toast } from "sonner";
-import { UseFormSetError } from "react-hook-form";
 
 type User = {
     first_name?: string,
@@ -82,6 +81,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         access_token: "",
     });
 
+    console.log('loggedInUser in context' , loggedInUser);
+
     const Signin = async (reqData: User | FormData): Promise<LoginResponse | undefined> => {
         try {
             const response = await fetch(`${apiRoutes.auth.login}`, {
@@ -110,6 +111,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
                 user,
                 message,
             });
+            setLoggedInUser({
+                username: responseData.data.user.username,
+                email: responseData.data.user.email
+            })
             setAuth({
                 access_token,
             });
@@ -153,6 +158,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
                 }
             }
             if (response.ok) {
+                setUser({
+                    user: responseData.data,
+                    message: ""
+                })
                 return {
                     data: responseData.data,
                     message: "Sucessfully Registered"
@@ -176,6 +185,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
                 },
                 body: reqData
             });
+            console.log(response)
             localStorage.removeItem("access_token");
             localStorage.removeItem("refresh_token");
             localStorage.removeItem("user");
@@ -196,12 +206,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     };
 
     const getUser = async () => {
+        const controller = new AbortController()
         try {
+            
             const response = await fetch(apiRoutes.auth.profile, {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${access_token}`
-                }
+                },
+                signal:controller.signal
             })
             const {data}: { data: User } = await response.json();
             if (!response.ok && response.status === 400) {

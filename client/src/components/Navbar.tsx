@@ -5,42 +5,40 @@ import { Link, useLocation } from 'react-router-dom';
 import Avatar from './ui/Avatar/Avatar';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/Auth.context';
-type User = {
-    username: string;
-    email?: string,
-};
+
 
 const Navbar = () => {
     const { pathname } = useLocation();
 
     const [ham, setHam] = useState<boolean>(false);
-    const { getUser  , loggedInUser} = useAuth();
+    const { getUser, loggedInUser } = useAuth();
 
     useEffect(() => {
         getUser()
     }, [])
 
+    console.log('loggedInUser in NAVBAR', loggedInUser);
 
     return (
         <>
             <div className='h-[60px] border-b border-border px-4 py-2 relative'>
                 <div className='flex items-center h-full w-full max-w-[1450px] mx-auto justify-between '>
                     <Link to={'/'} className='flex items-center gap-1 w-fit pr-4'>
-                        <img src="/public/assets/revise-loop-icon-xs.svg" alt="" className='size-4' />
+                        <img src="/assets/revise-loop-icon-xs.svg" alt="" className='size-4' />
                         <p className='text-xl font-medium tracking-tighter'>Script.it</p>
 
                     </Link>
                     <div className='hidden lg:flex items-center gap-8 w-full justify-between'>
 
                         {
-                            loggedInUser ?
+                            loggedInUser.username && loggedInUser.email ?
                                 <div className='pl-6'>
                                     <Avatar />
                                 </div> : <div className='pl-6' />
                         }
                         <div className='flex items-center gap-8'>
                             {
-                                loggedInUser && (pathname == "/") ? (
+                                loggedInUser.username && loggedInUser.email && (pathname == "/") ? (
                                     <>
                                         <Link to={"/search"} className=''>
                                             <Button type='button' variant='ghost' className='text-black border'>
@@ -54,7 +52,17 @@ const Navbar = () => {
                                 ) : null
                             }
                             {
-                                !loggedInUser ? ( 
+                                loggedInUser.username && loggedInUser.email ? (
+                                    <>
+                                        <Link to={'/history'}>
+                                            <Button type='button' variant='secondary' className='border border-subTextGrey'>
+                                                Files History
+                                            </Button>
+                                        </Link>
+                                        <UploadStatus />
+                                    </>
+
+                                ) : (
                                     <>
                                         <Link to={'/signin'} className='cursor-pointer'>Login</Link>
                                         <Link to={'/signup'}>
@@ -65,15 +73,6 @@ const Navbar = () => {
                                                 </div>
                                             </Button>
                                         </Link>
-                                    </>
-                                ) : (
-                                    <>
-                                        <Link to={'/history'}>
-                                            <Button type='button' variant='secondary' className='border border-subTextGrey'>
-                                                Files History
-                                            </Button>
-                                        </Link>
-                                        <UploadStatus />
                                     </>
                                 )
                             }
@@ -94,7 +93,11 @@ const Navbar = () => {
                                 </div>
                                 <div className='flex h-[110px] flex- items-center'>
                                     {
-                                        !loggedInUser ? (
+                                        loggedInUser.username && loggedInUser.email ? (
+                                            <UploadStatus />
+
+
+                                        ) : (
                                             <>
                                                 <h1 className='cursor-pointer'>Login</h1>
                                                 <Button type='button' variant='primary' >
@@ -104,8 +107,6 @@ const Navbar = () => {
                                                     </div>
                                                 </Button>
                                             </>
-                                        ) : (
-                                            <UploadStatus />
                                         )
                                     }
                                 </div>

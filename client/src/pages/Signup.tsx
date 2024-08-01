@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react'
+import  { useEffect } from 'react'
 import { Button } from '../components/ui/Button'
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginSchema } from '../utils/validation';
-import { FieldValues, useForm } from 'react-hook-form';
+import {useForm } from 'react-hook-form';
 import { useAuth } from '../context/Auth.context';
 import { z } from 'zod';
-import { CircleUser, Lock, Mail, User2, UserIcon, UserPlus } from 'lucide-react';
+import { CircleUser, Lock, Mail,  UserPlus } from 'lucide-react';
 import { toast } from 'sonner';
 
 type LoginSchemaType = z.infer<typeof LoginSchema>;
 
 const Signup = () => {
-  const { SignUp, user, auth, Logout } = useAuth();
+  const { SignUp, user, auth } = useAuth();
   const navigate = useNavigate();
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(LoginSchema)
@@ -30,7 +30,8 @@ const Signup = () => {
       errors,
     },
     setError,
-    clearErrors
+    clearErrors,
+    reset
   } = form;
 
   const onSubmit = async (values: LoginSchemaType) => {
@@ -76,7 +77,18 @@ const Signup = () => {
     if (user?.message) {
       setError("root", { message: user?.message })
     }
+    else {
+      clearErrors("root");
+    }
   }, [user])
+  useEffect(() => {
+    return () => {
+      reset();
+    };
+  }, [reset]);
+
+  console.log('userSTATE in Register',user);
+
 
   console.log('user msg', user?.message);
   return (

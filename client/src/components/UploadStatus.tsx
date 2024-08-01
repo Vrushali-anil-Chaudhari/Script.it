@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useModalContext } from "../context/context";
 import { Button } from "./ui/Button";
 import Modal from "./Modal";
@@ -52,7 +51,7 @@ const UploadStatus = () => {
                         {status.state === "FAILED" && status.message}
                         {status.state === "SUCCESS" && "File Upload Successful"}
                         {status.state === "IN_PROGRESS" && `Uploading ${files_length} files`}
-                        {status.state === "IDLE" && "Nothing to Upload"}
+                        {status.state === "IDLE" && "Upload files here"}
                     </p>
                 </div>
                 <Button
@@ -61,7 +60,7 @@ const UploadStatus = () => {
                     onClick={openModal}
                 >
                     <div className="absolute bg-gradient-to-r from-[#262626] to-[#525252] h-[100px] w-[20px] rotate-[15deg] animate-shine -top-1 bottom-0 left-0 blur z-[-1]" />
-                    <p>View Files</p>
+                    <p>Upload</p>
                 </Button>
             </div>
             {
