@@ -112,7 +112,7 @@ export const ModalProvider = ({ children }: TModalProvider) => {
         results: null,
         total_results: 0
     })
-    const [pageCitationNumber, setPageCitationNumber] = useState<number>(1);
+    const [pageCitationNumber, setPageCitationNumber] = useState<number>(0);
     
 
     const openModal = () => {
