@@ -26,7 +26,7 @@ const DocumentModal = ({ setOpen, data: { response, document_key, page, question
   };
   const highlights = [
     {
-      pageIndex: pageCitationNumber === 1 ? 0 : pageCitationNumber,
+      pageIndex: pageCitationNumber,
       height: 100,
       width: 100,
       left: 0,
