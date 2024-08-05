@@ -13,10 +13,10 @@ function App() {
         <Layout>
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/signin' element={<Signin   />} />
-            <Route path='/signup' element={<Signup   />} />
-            <Route path='/search' element={<ProtectedRoute User={<Search />}/>} />
-            <Route path='/history' element={<FileHistory   />} />
+            <Route path='/signin' element={<Signin />} />
+            <Route path='/signup' element={<Signup />} />
+            <Route path='/search' element={<ProtectedRoute User={<Search />} />} />
+            <Route path='/history' element={<ProtectedRoute User={<FileHistory />} />} />
           </Routes>
         </Layout>
       </Router>

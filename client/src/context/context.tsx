@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import React, { createContext, ReactNode, useContext, useState } from "react";
 import { apiRoutes } from "../config/apiconfig";
 import { toast } from "sonner";
 
@@ -17,7 +17,7 @@ type TModalContext = {
     handleDrop: (acceptedFiles: File[]) => void
     GetUploadedFiles: () => Promise<FileHistory | undefined>;
     deletedSingleFile: (fileName: string) => void;
-    GetFileContent:(fileName: string) => Promise<{text: string} | undefined>;
+    GetFileContent:(fileName: string) => Promise<{document_key: string , url: string} | undefined>;
 
     searchQueryResponse: MutatedSearchResponse,
     setSearchQueryResponse?: React.Dispatch<React.SetStateAction<MutatedSearchResponse>>;
@@ -32,14 +32,22 @@ type TModalContext = {
     fileStatuses: FileStatus[],
     setFileStatuses: React.Dispatch<React.SetStateAction<FileStatus[]>>
 
+    pageCitationNumber: number,
+    setPageCitationNumber: React.Dispatch<React.SetStateAction<number>>
+
+    changePageWithCitation: (pageNumber:number)=>void
+
 }
 type TModalProvider = {
     children: ReactNode
 }
 interface SearchResponse {
     results: {
-        data: string[]
-        document_key: string
+        response: string,
+        page: number,
+        score: number,
+        document_key: string,
+        question: string
     }[] | null,
     total_results: number
 }
@@ -104,6 +112,8 @@ export const ModalProvider = ({ children }: TModalProvider) => {
         results: null,
         total_results: 0
     })
+    const [pageCitationNumber, setPageCitationNumber] = useState<number>(1);
+    
 
     const openModal = () => {
         setModal(true)
@@ -325,7 +335,7 @@ export const ModalProvider = ({ children }: TModalProvider) => {
 
     }
 
-    const GetFileContent=async(fileName:string):Promise<{text: string} | undefined>=>{
+    const GetFileContent=async(fileName:string):Promise<{document_key: string , url: string} | undefined>=>{
         try {
             const response = await fetch(`${apiRoutes.files.getFileContent(fileName)}`, {
                 method: "GET",
@@ -334,9 +344,10 @@ export const ModalProvider = ({ children }: TModalProvider) => {
                 }
             });
 
-            const {text}:{text: string} = await response.json();
+            const {document_key , url}:{document_key: string , url: string} = await response.json();
             return {
-                text
+                document_key,
+                url
             }
 
         } catch (error) {
@@ -344,12 +355,19 @@ export const ModalProvider = ({ children }: TModalProvider) => {
                 className: "text-red-600 px-4 py-3"
             })
             return {
-                text: "No file content found !"
+                document_key: "",
+                url: ""
             }
         }
     }
+
+    // Citation page setter.
+
+    const changePageWithCitation=(pageNumber:number)=>{
+        setPageCitationNumber(pageNumber);
+    }
     return (
-        <ModalContext.Provider value={{ modal, openModal, closeModal, files, handleDrop, setFiles, status, setStatus, handleQuery, searchQueryResponse, isSearchResponseLoading, setSearchResponseLoading, fileStatuses, setFileStatuses, GetUploadedFiles, deletedSingleFile , GetFileContent , fileContent , setFileContent}}>
+        <ModalContext.Provider value={{ modal, openModal, closeModal, files, handleDrop, setFiles, status, setStatus, handleQuery, searchQueryResponse, isSearchResponseLoading, setSearchResponseLoading, fileStatuses, setFileStatuses, GetUploadedFiles, deletedSingleFile , GetFileContent , fileContent , setFileContent , pageCitationNumber, setPageCitationNumber , changePageWithCitation}}>
             {children}
         </ModalContext.Provider>
     )
