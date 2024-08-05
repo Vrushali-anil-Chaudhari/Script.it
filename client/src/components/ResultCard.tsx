@@ -1,30 +1,40 @@
 import { Text } from 'lucide-react'
-import Drawer from './Drawer'
 import { useModalContext } from '../context/context'
 import { useState } from 'react'
+import DocumentModal from './DocumentModal'
 
 interface ResultCardProps {
   isOpen: boolean
   setOpen: (value: boolean) => void,
   data: {
-    data: string[]
-    document_key: string
+    response: string,
+    page: number,
+    score: number,
+    document_key: string,
+    question: string
+
   }
 }
 
 const ResultCard = ({ data }: ResultCardProps) => {
   const { GetFileContent, setFileContent } = useModalContext();
-  const [isLoading , setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [drawerData, setDrawerData] = useState<{ data: string[], document_key: string } | null>(null);
+  const [documentData, setDocumentData] = useState<ResultCardProps["data"] | null>(null);
 
   const handleViewDocument = () => {
     setIsLoading(true)
-    console.log('clicked On Data with Document key : => ', data, "with key", data.document_key);
+    console.log('clicked On Data with Document key : => ', data, "with key", data.document_key , data.question);
     GetFileContent(data.document_key).then((fileData) => {
       if (!fileData) return;
-      setFileContent(fileData.text);
-      setDrawerData({ data: data.data, document_key: data.document_key });
+      setFileContent(fileData.url);
+      setDocumentData({
+        response: data.response,
+        page: data.page,
+        score: data.score,
+        document_key: data.document_key,
+        question: data.question
+      });
       setIsDrawerOpen(true);
       setIsLoading(false)
     });
@@ -45,22 +55,27 @@ const ResultCard = ({ data }: ResultCardProps) => {
           </div> */}
           {
             isLoading ? (
-               <>
-                  <span className="loader"></span>  
-               </>
+              <>
+                <span className="loader"></span>
+              </>
             ) : (
-                <p onClick={handleViewDocument} className='text-reddish'>View Document</p>
+              <p onClick={handleViewDocument} className='text-reddish'>View Document</p>
             )
           }
         </div>
       </div>
       {
-        isDrawerOpen && drawerData && (
-          <Drawer
+        isDrawerOpen && documentData && (
+          <DocumentModal
             setOpen={setIsDrawerOpen}
-            data={drawerData}
+            data={documentData}
             isOpen={isDrawerOpen}
           />
+          // <Drawer
+          //   setOpen={setIsDrawerOpen}
+          //   data={documentData}
+          //   isOpen={isDrawerOpen}
+          // />
         )
       }
     </>
