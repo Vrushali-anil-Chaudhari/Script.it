@@ -4,7 +4,6 @@ import { useModalContext } from '../context/context';
 import ResultCard from '../components/ResultCard';
 import Searchbar from '../components/ui/Searchbar';
 import Skeleton from '../states/Skeleton';
-import DocumentModal from '../components/DocumentModal';
 
 
 const Search = () => {

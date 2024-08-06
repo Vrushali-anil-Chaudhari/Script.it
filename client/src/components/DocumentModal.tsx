@@ -26,7 +26,7 @@ const DocumentModal = ({ setOpen, data: { response, document_key, page, question
   };
   const highlights = [
     {
-      pageIndex: 6,
+      pageIndex: pageCitationNumber,
       height: 100,
       width: 100,
       left: 0,
@@ -42,7 +42,7 @@ const DocumentModal = ({ setOpen, data: { response, document_key, page, question
         <div className='max-w-7xl w-full h-full max-h-screen  z-40 rounded-2xl border shadow  bg-white flex justify-between'>
           <div className="w-2/3 h-full overflow-y-auto ">
             <PDFViewer
-              fileUrl={"https://res.cloudinary.com/dmr6cs1hx/image/upload/v1722856440/osactqlgvzsblqiqgt7k.pdf"}
+              fileUrl={fileContent}
               pageNumber={pageCitationNumber}
               highlights={highlights}
             />
