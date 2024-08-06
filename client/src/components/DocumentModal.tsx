@@ -26,7 +26,7 @@ const DocumentModal = ({ setOpen, data: { response, document_key, page, question
   };
   const highlights = [
     {
-      pageIndex: pageCitationNumber,
+      pageIndex: 6,
       height: 100,
       width: 100,
       left: 0,
@@ -42,10 +42,15 @@ const DocumentModal = ({ setOpen, data: { response, document_key, page, question
         <div className='max-w-7xl w-full h-full max-h-screen  z-40 rounded-2xl border shadow  bg-white flex justify-between'>
           <div className="w-2/3 h-full overflow-y-auto ">
             <PDFViewer
-              fileUrl={fileContent}
+              fileUrl={"https://res.cloudinary.com/dmr6cs1hx/image/upload/v1722856440/osactqlgvzsblqiqgt7k.pdf"}
               pageNumber={pageCitationNumber}
               highlights={highlights}
             />
+            {/* <PDFViewer
+              fileUrl={"https://res.cloudinary.com/dmr6cs1hx/image/upload/v1722856440/osactqlgvzsblqiqgt7k.pdf"}
+              pageNumber={pageCitationNumber}
+              highlights={highlights}
+            /> */}
 
 
           </div>
@@ -97,7 +102,7 @@ export const DocumentCard = ({ page, response, question, onCitationButtonClick }
     <>
       <div className="border rounded-xl p-2 bg-white">
         <div className="flex justify-between p-2">
-          <p className="p-2 text-subTextGrey">{response}</p>
+          <p className="p-2 text-subTextGrey select-all">{response}</p>
           <div className="pt-1 h-fit">
             <CitationButton citationNumber={page} onCitationButtonClick={onCitationButtonClick} />
           </div>
