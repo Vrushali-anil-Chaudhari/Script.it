@@ -82,7 +82,7 @@ To install and set up the application, follow these steps:
    1. **Navigate to the client directory** :
 
       ```
-      cd ../client
+      cd client
       ```
    2. **Install dependencies** :
 
